@@ -866,7 +866,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 701606580188150792, guid: 6e572506b8fc3cc40abea0c45a2f4ac5, type: 3}
       propertyPath: m_Mass
-      value: 2.5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 701606580188150792, guid: 6e572506b8fc3cc40abea0c45a2f4ac5, type: 3}
       propertyPath: m_Material
@@ -878,7 +878,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 701606580188150792, guid: 6e572506b8fc3cc40abea0c45a2f4ac5, type: 3}
       propertyPath: m_GravityScale
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 701606580188150793, guid: 6e572506b8fc3cc40abea0c45a2f4ac5, type: 3}
       propertyPath: m_Material
@@ -966,7 +966,7 @@ PrefabInstance:
       objectReference: {fileID: 203786284}
     - target: {fileID: 701606580188150806, guid: 6e572506b8fc3cc40abea0c45a2f4ac5, type: 3}
       propertyPath: jumpForce
-      value: 30
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 1093473557486154700, guid: 6e572506b8fc3cc40abea0c45a2f4ac5, type: 3}
       propertyPath: m_Material
