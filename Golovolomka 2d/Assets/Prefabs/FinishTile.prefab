@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 7859334119057106812}
   - component: {fileID: 8190466125599864549}
   - component: {fileID: 639289345252987174}
-  - component: {fileID: -7203646650652372926}
+  - component: {fileID: 5071960576855661284}
   m_Layer: 0
   m_Name: FinishTile
-  m_TagString: Untagged
+  m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -112,7 +112,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-7203646650652372926
+--- !u!114 &5071960576855661284
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,6 +121,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 2206874938371672570}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cae43a8bbca7b5d44b727c9f2dbca5b1, type: 3}
+  m_Script: {fileID: 11500000, guid: 12ea49d2e77516b4488d791377df2282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

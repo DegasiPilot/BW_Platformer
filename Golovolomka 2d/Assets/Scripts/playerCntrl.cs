@@ -86,10 +86,4 @@ public class playerCntrl : MonoBehaviour
         spriteRenderer.enabled = true;
         rb.simulated = true;
     }
-
-    public void Finish()
-    {
-        rb.velocity = new Vector2(0, rb.velocity.y);
-        this.enabled = false;
-    }
 }

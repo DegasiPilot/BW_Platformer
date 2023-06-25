@@ -6,12 +6,19 @@ using UnityEngine;
 public class TileScript : MonoBehaviour
 {
     public Color MyColor;
-    public static List<TileScript> AllTiles = new List<TileScript>();
+    public static List<TileScript> AllTiles;
 
     private void Start()
     {
         MyColor = gameObject.GetComponent<SpriteRenderer>().color;
-        AllTiles.Add(this);
+        try{
+            AllTiles.Add(this);
+        }
+        catch
+        {
+            AllTiles = new List<TileScript>();
+            AllTiles.Add(this);
+        }
     }
 
     public static void ChangeStateForAll(Color BackColor)
