@@ -60,6 +60,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void NextLevel()
+    {
+        try
+        {
+            TileScript.AllTiles = new List<TileScript>();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        catch { }
+    }
+
     public void RestartLevel()
     {
         TileScript.AllTiles = new List<TileScript>();
