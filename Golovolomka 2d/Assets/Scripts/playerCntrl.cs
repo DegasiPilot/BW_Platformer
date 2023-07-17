@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playerCntrl : MonoBehaviour
 {
@@ -76,14 +78,13 @@ public class playerCntrl : MonoBehaviour
         rb.velocity = new Vector2(0, 0);
         rb.simulated = false;
         spriteRenderer.enabled = false;
+        TileScript.AllTiles = new List<TileScript>();
         StartCoroutine(Respawn());
     }
 
     private IEnumerator Respawn()
     {
         yield return new WaitForSeconds(1);
-        transform.position = respawn.transform.position;
-        spriteRenderer.enabled = true;
-        rb.simulated = true;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
