@@ -78,7 +78,6 @@ public class playerCntrl : MonoBehaviour
         rb.velocity = new Vector2(0, 0);
         rb.simulated = false;
         spriteRenderer.enabled = false;
-        TileScript.AllTiles = new List<TileScript>();
         StartCoroutine(Respawn());
     }
 

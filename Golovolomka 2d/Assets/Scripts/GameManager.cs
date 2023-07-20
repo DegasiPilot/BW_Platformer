@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1;
+        TileScript.AllTiles = FindObjectsOfType<TileScript>();
+        TileScript.ChangeStateForAll(Background.color);
         StartCoroutine(BackgroundUpdater());
         StartCoroutine(PauseChecker());
     }
@@ -64,7 +66,6 @@ public class GameManager : MonoBehaviour
     {
         try
         {
-            TileScript.AllTiles = new List<TileScript>();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
         catch { }
@@ -72,13 +73,11 @@ public class GameManager : MonoBehaviour
 
     public void RestartLevel()
     {
-        TileScript.AllTiles = new List<TileScript>();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void BackToMenu()
     {
-        TileScript.AllTiles = new List<TileScript>();
         SceneManager.LoadScene(0);
     }
 
@@ -87,7 +86,6 @@ public class GameManager : MonoBehaviour
         FinishPanel.SetActive(true);
         Time.timeScale = 0;
         StopAllCoroutines(); // BackgroundUpdater() PauseChecker()
-        TileScript.AllTiles = new List<TileScript>();
     }
 
     public void Pause()
