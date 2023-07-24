@@ -62,6 +62,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void DestroyTip(int index)
+    {
+        Destroy(Tips[index].gameObject);
+        Tips.RemoveAt(index);
+    }
     public void NextLevel()
     {
         try

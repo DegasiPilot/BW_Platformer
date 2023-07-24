@@ -9,5 +9,9 @@ public class DeathSpace : MonoBehaviour
         {
             other.SendMessage("Death");
         }
+        else
+        {
+            Destroy(other);
+        }
     }
 }
