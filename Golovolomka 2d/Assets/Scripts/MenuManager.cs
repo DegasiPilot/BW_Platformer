@@ -8,19 +8,11 @@ public class MenuManager : MonoBehaviour
 {
     public GameObject levelsPanel;
     public GameObject[] coins;
-
-    public void Exit()
-    {
-        Application.Quit();
-    }
-
-    public void StartLevel(int levelNumber)
-    {
-        SceneManager.LoadScene("Level " + levelNumber);
-    }
+    public SaveSerialization SaveLoadSystem;
 
     private void Start()
     {
+        SaveLoadSystem = GetComponent<SaveSerialization>();
         try
         {
             bool check = GameData.CollectedCoins[0];
@@ -28,6 +20,11 @@ public class MenuManager : MonoBehaviour
         catch
         {
             GameData.CollectedCoins = new bool[coins.Length];
+            
+        }
+        finally
+        {
+            SaveLoadSystem.SaveGame();
         }
 
         for (int i = 0; i < coins.Length; i++)
@@ -36,4 +33,16 @@ public class MenuManager : MonoBehaviour
                 coins[i].GetComponent<Image>().color = Color.white;
         }
     }
+    public void Exit()
+    {
+        SaveLoadSystem.SaveGame();
+        Application.Quit();
+    }
+
+    public void StartLevel(int levelNumber)
+    {
+        SceneManager.LoadScene("Level " + levelNumber);
+    }
+
+   
 }

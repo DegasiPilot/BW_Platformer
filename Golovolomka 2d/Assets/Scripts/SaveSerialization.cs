@@ -44,7 +44,7 @@ public class SaveSerialization : MonoBehaviour
         {
             File.Delete(Application.persistentDataPath
               + "/MySaveData.dat");
-            GameData.CollectedCoins = new bool[0];
+            GameData.CollectedCoins = null;
             Debug.Log("Data reset complete!");
         }
         else

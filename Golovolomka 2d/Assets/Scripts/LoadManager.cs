@@ -8,6 +8,7 @@ public class LoadManager : MonoBehaviour
     private void Start()
     {
         SaveSerialization SaveLoadSystem = GetComponent<SaveSerialization>();
+        Debug.Log(Application.persistentDataPath);
         SaveLoadSystem.LoadGame();
         SceneManager.LoadScene(1); 
     }
