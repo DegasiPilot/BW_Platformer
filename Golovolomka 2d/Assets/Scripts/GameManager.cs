@@ -91,6 +91,9 @@ public class GameManager : MonoBehaviour
         FinishPanel.SetActive(true);
         Time.timeScale = 0;
         StopAllCoroutines(); // BackgroundUpdater() PauseChecker()
+        string SceneName = SceneManager.GetActiveScene().name;
+        int levelNumber = Convert.ToInt32(SceneName.Split(' ')[1]);
+        GameData.CompletedLevels[levelNumber - 1] = true;
     }
 
     public void Pause()

@@ -14,6 +14,7 @@ public class SaveSerialization : MonoBehaviour
           + "/MySaveData.dat", FileMode.OpenOrCreate);
         SaveData data = new SaveData();
         data.IsCoinsCollect = GameData.CollectedCoins;
+        data.IsLevelsComplete = GameData.CompletedLevels;
         bf.Serialize(file, data);
         file.Close();
         Debug.Log("Game data saved!");
@@ -31,6 +32,7 @@ public class SaveSerialization : MonoBehaviour
             SaveData data = (SaveData)bf.Deserialize(file);
             file.Close();
             GameData.CollectedCoins = data.IsCoinsCollect;
+            GameData.CompletedLevels = data.IsLevelsComplete;
             Debug.Log("Game data loaded!");
         }
         else
@@ -44,7 +46,6 @@ public class SaveSerialization : MonoBehaviour
         {
             File.Delete(Application.persistentDataPath
               + "/MySaveData.dat");
-            GameData.CollectedCoins = null;
             Debug.Log("Data reset complete!");
         }
         else
@@ -58,4 +59,5 @@ public class SaveSerialization : MonoBehaviour
 class SaveData
 {
     public bool[] IsCoinsCollect;
+    public bool[] IsLevelsComplete;
 }
