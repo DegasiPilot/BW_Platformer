@@ -8,23 +8,28 @@ public class TileScript : MonoBehaviour
     public Color MyColor;
     public static TileScript[] AllTiles;
 
-    private void Start()
+    private void Awake()
     {
         MyColor = gameObject.GetComponent<SpriteRenderer>().color;
+    }
+
+    public void ChangeState(Color BackColor)
+    {
+        if (MyColor == BackColor)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+        }
     }
 
     public static void ChangeStateForAll(Color BackColor)
     {
         foreach (TileScript tile in AllTiles)
         {
-            if (tile.MyColor == BackColor)
-            {
-                tile.gameObject.SetActive(false);
-            }
-            else
-            {
-                tile.gameObject.SetActive(true);
-            }
+            tile.ChangeState(BackColor);
         }
     }
 }
