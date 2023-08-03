@@ -6,16 +6,21 @@ using UnityEngine.SceneManagement;
 
 public class playerCntrl : MonoBehaviour
 {
-    public float speed = 7;
+    public float speed = 5;
     public float jumpForce = 7;
     [NonSerialized] public bool IsGrounded = false;
+    public GameObject respawn;
+    public float bonusTime;
+
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
 
-    public GameObject respawn;
+    private BonusType currentBonus = BonusType.None;
+    Coroutine bonusCourotine;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -30,7 +35,6 @@ public class playerCntrl : MonoBehaviour
         flip(h);
         RunAnim(h);
         JumpAnim();
-
     }
 
     private void Update()
@@ -85,5 +89,27 @@ public class playerCntrl : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void PickUpBonus(BonusType bonusType)
+    {
+        try { StopCoroutine(bonusCourotine); }
+        catch { }
+        currentBonus = bonusType;
+        if(currentBonus == BonusType.Slow)
+        {
+            speed = 3;
+        } else if (currentBonus == BonusType.SpeedUp)
+        {
+            speed = 6.5f;
+        }
+        bonusCourotine = StartCoroutine(BonusTimer());
+    }
+
+    private IEnumerator BonusTimer()
+    {
+        yield return new WaitForSeconds(bonusTime);
+        currentBonus = BonusType.None;
+        speed = 5;
     }
 }

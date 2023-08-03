@@ -6,7 +6,7 @@ using UnityEngine;
 public class TileScript : MonoBehaviour
 {
     public Color MyColor;
-    public static TileScript[] AllTiles;
+    public static List<TileScript> AllTiles;
 
     private void Awake()
     {
@@ -27,9 +27,16 @@ public class TileScript : MonoBehaviour
 
     public static void ChangeStateForAll(Color BackColor)
     {
-        foreach (TileScript tile in AllTiles)
+        for(int i=0; i<AllTiles.Count; i++)
         {
-            tile.ChangeState(BackColor);
+            try
+            {
+                AllTiles[i].ChangeState(BackColor);
+            }
+            catch
+            {
+                AllTiles.RemoveAt(i);
+            }
         }
     }
 }
