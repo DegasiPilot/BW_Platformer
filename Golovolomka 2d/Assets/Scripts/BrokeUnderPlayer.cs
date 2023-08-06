@@ -11,6 +11,7 @@ public class BrokeUnderPlayer : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             StartCoroutine(BrokePlatform());
+            GetComponent<Collider2D>().enabled = false;
         }
     }
 

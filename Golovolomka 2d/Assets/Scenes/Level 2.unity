@@ -476,7 +476,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 38.56, y: 6.6}
+  m_AnchoredPosition: {x: 39.56, y: 6.6}
   m_SizeDelta: {x: 552.4961, y: 146.5219}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &404843701
@@ -1012,7 +1012,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4800152629906224462, guid: 36bbc75093b545c449d3bce40f91a699, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 37.5
+      value: 38.5
       objectReference: {fileID: 0}
     - target: {fileID: 4800152629906224462, guid: 36bbc75093b545c449d3bce40f91a699, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2683,7 +2683,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1743436178523977886, guid: 32a5a347b42db574fa23c72935900aa7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 38.5
+      value: 39.5
       objectReference: {fileID: 0}
     - target: {fileID: 1743436178523977886, guid: 32a5a347b42db574fa23c72935900aa7, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2721,6 +2721,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7907573575040815606, guid: 32a5a347b42db574fa23c72935900aa7, type: 3}
+      propertyPath: Blocks.Array.data[0]
+      value: 
+      objectReference: {fileID: 576643897}
+    - target: {fileID: 7907573575040815606, guid: 32a5a347b42db574fa23c72935900aa7, type: 3}
+      propertyPath: Blocks.Array.data[1]
+      value: 
+      objectReference: {fileID: 1984998092}
+    - target: {fileID: 7907573575040815606, guid: 32a5a347b42db574fa23c72935900aa7, type: 3}
+      propertyPath: Blocks.Array.data[2]
+      value: 
+      objectReference: {fileID: 847938100}
+    - target: {fileID: 7907573575040815606, guid: 32a5a347b42db574fa23c72935900aa7, type: 3}
+      propertyPath: Blocks.Array.data[3]
+      value: 
+      objectReference: {fileID: 1018720096}
+    - target: {fileID: 7907573575040815606, guid: 32a5a347b42db574fa23c72935900aa7, type: 3}
+      propertyPath: Blocks.Array.data[4]
+      value: 
+      objectReference: {fileID: 1630387582}
+    - target: {fileID: 7907573575040815606, guid: 32a5a347b42db574fa23c72935900aa7, type: 3}
+      propertyPath: Blocks.Array.data[5]
+      value: 
+      objectReference: {fileID: 178418799}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32a5a347b42db574fa23c72935900aa7, type: 3}
 --- !u!1001 &1747498056161490091

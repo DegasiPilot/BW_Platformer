@@ -95,6 +95,8 @@ public class GameManager : MonoBehaviour
         string SceneName = SceneManager.GetActiveScene().name;
         int levelNumber = Convert.ToInt32(SceneName.Split(' ')[1]);
         GameData.CompletedLevels[levelNumber - 1] = true;
+        SaveSerialization saveSerialization = new SaveSerialization();
+        saveSerialization.SaveGame();
     }
 
     public void Pause()
