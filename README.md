@@ -1,2 +1,2 @@
 # BW_Golovolomka
-Black&amp;White Golovolomka
+Black&amp;White Platformer
