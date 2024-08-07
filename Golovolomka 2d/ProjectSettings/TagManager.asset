@@ -42,3 +42,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Decor
+    uniqueID: 153376685
+    locked: 0
+  - name: Blocks
+    uniqueID: 3149921165
+    locked: 0
+  - name: ItemsAndObjects
+    uniqueID: 697334081
+    locked: 0
+  - name: Units
+    uniqueID: 560968375
+    locked: 0
+  - name: UI
+    uniqueID: 1571147927
+    locked: 0
