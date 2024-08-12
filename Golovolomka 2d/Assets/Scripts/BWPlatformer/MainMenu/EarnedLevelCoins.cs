@@ -10,9 +10,12 @@ namespace BWPlatformer.MainMenu
 
 		public void Init(bool[] isCoinsCollected)
 		{
-			for(int i = 0; i < isCoinsCollected.Length; i++)
+			for (int i = 0; i < isCoinsCollected.Length; i++)
 			{
-				_coins[i].color = Color.white;
+				if (isCoinsCollected[i])
+				{
+					_coins[i].color = Color.white;
+				}
 			}
 		}
 	}

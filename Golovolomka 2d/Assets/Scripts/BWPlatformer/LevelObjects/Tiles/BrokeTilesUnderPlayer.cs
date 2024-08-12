@@ -17,6 +17,8 @@ namespace BWPlatformer.LevelObjects.Tiles
 		private Grid _grid;
 		private readonly HashSet<Vector3Int> _allTilesToBroke = new();
 
+		private readonly ContactPoint2D[] _contacts = new ContactPoint2D[4];
+
 
 		protected override void Awake()
 		{
@@ -27,18 +29,21 @@ namespace BWPlatformer.LevelObjects.Tiles
 
 		protected override void Broke(Collision2D collision)
 		{
-			ContactPoint2D contact = collision.GetContact(0);
-			Vector2 centerOfTile = contact.point + contact.relativeVelocity.normalized / 2;
-			Vector3Int startTilePos = _grid.WorldToCell(centerOfTile);
-			TileBase tile = _tilemap.GetTile(startTilePos);
-			if (tile != null && !_allTilesToBroke.Contains(startTilePos))
+			int contactsCount = collision.GetContacts(_contacts);
+			for(int i = 0; i < contactsCount; i++)
 			{
-				StartCoroutine(BrokeRoutine());
+				Vector2 dotInTile = _contacts[i].point + _contacts[i].normal/2;
+				Vector3Int tilePos = _grid.WorldToCell(dotInTile);
+				TileBase tile = _tilemap.GetTile(tilePos);
+				if (tile != null && !_allTilesToBroke.Contains(tilePos))
+				{
+					StartCoroutine(BrokeRoutine(tile, tilePos));
+				}
 			}
 
-			IEnumerator BrokeRoutine()
+			IEnumerator BrokeRoutine(TileBase tileType, Vector3Int startTilePos)
 			{
-				foreach (var tilesGroup in GetBrokingTiles(tile, startTilePos))
+				foreach (var tilesGroup in GetBrokingTiles(tileType, startTilePos))
 				{
 					_allTilesToBroke.UnionWith(tilesGroup);
 					if(_brokingAnimation != null)
@@ -86,7 +91,7 @@ namespace BWPlatformer.LevelObjects.Tiles
 
 		private bool IsExistTile(TileBase tileType, Vector3Int tilePos)
 		{
-			return _tilemap.GetTile(tilePos) != null;
+			return _tilemap.GetTile(tilePos) == tileType;
 		}
 	}
 }

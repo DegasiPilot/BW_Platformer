@@ -1,4 +1,3 @@
-using BWPlatformer;
 using UnityEngine;
 
 namespace BWPlatformer.LevelObjects.Tiles

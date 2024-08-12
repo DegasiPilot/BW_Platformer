@@ -1,4 +1,4 @@
-using BWPlatformer.Enums;
+using BWPlatformer.Input;
 using BWPlatformer.Interfaces;
 using BWPlatformer.LevelObjects.Bonuses;
 using System.Collections;
@@ -13,17 +13,17 @@ namespace BWPlatformer.Player
     {
         [SerializeField] private float _speed = 5;
         [SerializeField] private float _jumpForce = 7;
-        [SerializeField] private KeyCode _jumpButton;
         [SerializeField] private float _bonusTime;
         [SerializeField] private Transform _bottomDeathBorder;
+		[SerializeField] private BaseInputReader _inputReader;
 
         private IGroundChecker _groundChecker;
         private Rigidbody2D _rigidbody;
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
 
-        private BonusType _currentBonus = BonusType.None;
-        private Coroutine _bonusCourotine;
+        private float _horizontalInput;
+		private bool _jumpInput;
 
         public float Speed { get => _speed; set => _speed = value; }
 
@@ -40,44 +40,65 @@ namespace BWPlatformer.Player
 
 			_groundChecker.OnLanded += () => _animator.SetBool("IsJumping", false);
 			_groundChecker.OnJumped += () => _animator.SetBool("IsJumping", true);
+
+            _inputReader.OnJumpInput += OnJump;
+            _inputReader.OnMoveInput += OnMove;
 		}
+
+		private void OnMove(Vector2 OnMove)
+		{
+            _horizontalInput = OnMove.x;
+		}
+
+		private void OnJump()
+        {
+            if (!_jumpInput && Time.timeScale > 0)
+            {
+                _jumpInput = true;
+            }
+        }
 
         void FixedUpdate()
         {
-            if(transform.position.y <= _bottomDeathBorder.position.y)
+            if (Time.timeScale > 0)
             {
-                Death();
-                return;
+                if (transform.position.y <= _bottomDeathBorder.position.y)
+                {
+                    Death();
+                    return;
+                }
+                _rigidbody.velocity = new Vector2(_horizontalInput * _speed, _rigidbody.velocity.y);
+                bool isGrounded = _groundChecker.IsGrounded;
+                CheckJump(isGrounded);
+                Flip();
+                RunAnim(isGrounded);
             }
-            float h = Input.GetAxis("Horizontal");
-            _rigidbody.velocity = new Vector2(h * _speed, _rigidbody.velocity.y);
-            Flip(h);
-            RunAnim(h);
         }
 
-        private void Update()
+        private void CheckJump(bool isGrounded)
         {
-            if (Input.GetKeyDown(_jumpButton) && _groundChecker.IsGrounded)
+            if (_jumpInput && isGrounded)
             {
                 _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
             }
-        }
+			_jumpInput = false;
+		}
 
-        private void Flip(float h)
+        private void Flip()
         {
-            if (h > 0)
+            if (_horizontalInput > 0)
             {
                 _spriteRenderer.flipX = true;
             }
-            else if (h < 0)
+            else if (_horizontalInput < 0)
             {
                 _spriteRenderer.flipX = false;
             }
         }
 
-        private void RunAnim(float h)
+        private void RunAnim(bool isGrounded)
         {
-            if (h != 0 && _groundChecker.IsGrounded)
+            if (_horizontalInput != 0 && isGrounded)
             {
                 _animator.SetBool("IsRunning", true);
             }
@@ -99,32 +120,6 @@ namespace BWPlatformer.Player
         {
             yield return new WaitForSeconds(1);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-
 		}
-
-        internal void PickUpBonus(BonusType bonusType)
-        {
-            if(_bonusCourotine != null) 
-            { 
-                StopCoroutine(_bonusCourotine); 
-            }
-            _currentBonus = bonusType;
-            if (_currentBonus == BonusType.Slow)
-            {
-                _speed = 3;
-            }
-            else if (_currentBonus == BonusType.SpeedUp)
-            {
-                _speed = 6.5f;
-            }
-            _bonusCourotine = StartCoroutine(BonusTimer());
-        }
-
-        private IEnumerator BonusTimer()
-        {
-            yield return new WaitForSeconds(_bonusTime);
-            _currentBonus = BonusType.None;
-            _speed = 5;
-        }
     }
 }

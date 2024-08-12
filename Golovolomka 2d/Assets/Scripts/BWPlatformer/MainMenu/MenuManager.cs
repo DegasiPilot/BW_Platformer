@@ -2,12 +2,11 @@ using BWPlatformer.Enums;
 using BWPlatformer.MainMenu;
 using BWPlatformer.UI;
 using System.Linq;
-
-#if DEBUG
-using UnityEditor;
-#endif
 using UnityEngine;
 using UnityEngine.SceneManagement;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace BWPlatformer
 {
@@ -40,7 +39,7 @@ namespace BWPlatformer
         {
 			GameDataManager.SaveGame();
             Application.Quit();
-#if DEBUG
+#if UNITY_EDITOR
             EditorApplication.isPlaying = false;
 #endif
         }

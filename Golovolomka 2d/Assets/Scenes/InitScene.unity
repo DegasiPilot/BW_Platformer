@@ -185,9 +185,9 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 32
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 2
-    m_MaxSize: 40
+    m_MaxSize: 100
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 0
@@ -217,7 +217,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _russianText: "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430..."
   _englishText: Loading...
-  _myLanguage: 0
 --- !u!1 &1571870203
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,6 +404,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88dd3ae515b2b444ad1d64f6605873a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnLoaded:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 21623358}
+        m_TargetAssemblyTypeName: BWPlatformer.UI.LocalizedText, Assembly-CSharp
+        m_MethodName: UpdateLocalizedText
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1677564263
 Transform:
   m_ObjectHideFlags: 0

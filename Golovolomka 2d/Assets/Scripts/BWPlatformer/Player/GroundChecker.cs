@@ -1,24 +1,28 @@
 using BWPlatformer.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace BWPlatformer.Player
 {
     public class GroundChecker : MonoBehaviour, IGroundChecker
     {
-        public bool IsGrounded => _collisionsCount > 0;
+		public bool IsGrounded { get; private set; }
+
         public event System.Action OnLanded;
         public event System.Action OnJumped;
 
-        private int _collisionsCount;
+        private HashSet<Collider2D> _collisionsColiders = new(4);
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.gameObject.CompareTag(Tags.Player))
             {
-                _collisionsCount++;
-                if(_collisionsCount == 1)
+				_collisionsColiders.Add(other);
+                if(_collisionsColiders.Count == 1)
                 {
                     OnLanded?.Invoke();
+                    IsGrounded = true;
                 }
 			}
         }
@@ -27,11 +31,28 @@ namespace BWPlatformer.Player
         {
             if (!other.gameObject.CompareTag(Tags.Player))
             {
-				_collisionsCount--;
-				if (_collisionsCount == 0)
+				_collisionsColiders.Remove(other);
+				if (_collisionsColiders.Count == 0)
 				{
 					OnJumped?.Invoke();
+					IsGrounded = false;
 				}
+			}
+        }
+
+        public void OnBackgroundColorChanged()
+        {
+            UpdateCollisions();
+        }
+
+        private void UpdateCollisions()
+        {
+            _collisionsColiders.RemoveWhere(c => !c.gameObject.activeInHierarchy);
+            bool LastGroundedState = IsGrounded;
+			IsGrounded = _collisionsColiders.Count > 0;
+            if(LastGroundedState && !IsGrounded)
+            {
+				OnJumped?.Invoke();
 			}
         }
     }

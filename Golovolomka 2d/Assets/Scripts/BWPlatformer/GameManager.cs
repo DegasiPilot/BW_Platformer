@@ -1,12 +1,11 @@
-using BWPlatformer.LevelObjects.Tiles;
 using BWPlatformer.DataSaveSystem;
 using System.Linq;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using BWPlatformer.LevelObjects;
-using UnityEngine.Tilemaps;
+using BWPlatformer.UI;
+using UnityEngine.Events;
+using BWPlatformer.Input;
 
 namespace BWPlatformer
 {
@@ -14,27 +13,28 @@ namespace BWPlatformer
     {
         public static GameManager Instance { get; private set; }
 
-        [SerializeField] private int _levelNumber;
-        [SerializeField] private Image _background;
-        [SerializeField] private KeyCode _keyBackChange;
-        [SerializeField] private GameObject _finishPanel;
-        [SerializeField] private GameObject _pausePanel;
-        [SerializeField] private KeyCode _pauseKey;
-        [SerializeField] private HideOnBackground[] _HideOnBackground;
+		[SerializeField] private UnityEvent<Color> _onBackgroundChanged;
 
-        [SerializeField] private List<Text> _tips;
+        [SerializeField] private int _levelNumber;
+        [SerializeField] private CanvasManager _canvasManager;
+		[SerializeField] private BaseInputReader _inputReader;
+
         [SerializeField] private Coin[] _coins;
 
         private bool _isLevelComleted;
+        private bool _backgroungChangeInput;
+        private bool _pauseInput;
+
+        private Camera _mainCamera;
 
 		private void Awake()
 		{
 			Time.timeScale = 1;
 			Instance = this;
-			foreach (var tilePalette in _HideOnBackground)
-			{
-				tilePalette.ChangeState(_background.color);
-			}
+            _mainCamera = Camera.main;
+#if UNITY_EDITOR
+            if (_mainCamera == null) throw new System.Exception("No camera on level!");
+#endif
             _isLevelComleted = GameDataManager.CurrentData.CompletedLevels.Count >= _levelNumber;
             if (_isLevelComleted)
             {
@@ -44,62 +44,68 @@ namespace BWPlatformer
                     if (levelInfo.IsEarnedCoins[i]) _coins[i].gameObject.SetActive(false);
 				}
 			}
+
+            _inputReader.OnChangeBackgroundInput += OnBackgroundChangeInput;
+            _inputReader.OnPauseInput += OnPauseInput;
+		}
+
+		private void Start()
+		{
+			_onBackgroundChanged.Invoke(_mainCamera.backgroundColor);
 		}
 
 		private void Update()
 		{
-			BackgroundUpdater();
-			PauseChecker();
-		}
-
-		private void PauseChecker()
-        {
-            if (Input.GetKeyDown(_pauseKey) && Time.timeScale > 0)
-            {
-				_pausePanel.SetActive(true);
-				Pause();
-            }
-        }
-
-        private void BackgroundUpdater()
-        {
-            if (Input.GetKeyDown(_keyBackChange) && Time.timeScale > 0)
+            if (_backgroungChangeInput)
             {
                 ChangeBackgroung();
+                _backgroungChangeInput = false;
             }
-        }
-
-        public void ChangeBackgroung()
-        {
-            if (_background.color == Color.white)
+            if (_pauseInput)
             {
-                _background.color = Color.black;
-            }
-            else
-            {
-                _background.color = Color.white;
-            }
-
-            foreach(var tilePalette in _HideOnBackground)
-            {
-                tilePalette.ChangeState(_background.color);
+				if (Time.timeScale > 0)
+				{
+					_canvasManager.SetActivePausePanel(true);
+					Pause();
+				}
+				else if(_canvasManager.IsPausePaneleActive)
+				{
+					ContinueLevel();
+				}
+                _pauseInput = false;
 			}
+		}
 
-            ChangeColorForTips(_background.color);
+		private void OnPauseInput()
+        {
+            if (!_pauseInput)
+            {
+                _pauseInput = true;
+			}
         }
 
-        private void ChangeColorForTips(Color backgroundColor)
+        private void OnBackgroundChangeInput()
         {
-            foreach (Text tip in _tips)
+			if (!_backgroungChangeInput && Time.timeScale > 0)
             {
-                tip.color = backgroundColor == Color.black ? Color.white : Color.black;
+                _backgroungChangeInput = true;
             }
         }
 
-        public void DestroyTip(Text tip)
+        private void ChangeBackgroung()
         {
-            Destroy(tip.gameObject);
-            _tips.Remove(tip);
+            Color backgroundColor = _mainCamera.backgroundColor;
+			if (backgroundColor == Color.white)
+			{
+				backgroundColor = Color.black;
+			}
+			else
+			{
+				backgroundColor = Color.white;
+			}
+            _mainCamera.backgroundColor = backgroundColor;
+
+			_onBackgroundChanged.Invoke(backgroundColor);
         }
 
         public void NextLevel()
@@ -123,7 +129,7 @@ namespace BWPlatformer
 
         public void Finish()
         {
-            _finishPanel.SetActive(true);
+            _canvasManager.OnFinish();
             Time.timeScale = 0;
             if (_isLevelComleted)
             {
@@ -149,7 +155,7 @@ namespace BWPlatformer
         public void ContinueLevel()
         {
             Time.timeScale = 1;
-            _pausePanel.SetActive(false);
+            _canvasManager.SetActivePausePanel(false);
         }
-    }
+	}
 }
