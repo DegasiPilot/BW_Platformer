@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 namespace BWPlatformer.Player
 {
     [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer), typeof(Animator))]
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IDamageable, ITeleportable
     {
         [SerializeField] private float _speed = 5;
         [SerializeField] private float _jumpForce = 7;
@@ -37,9 +37,6 @@ namespace BWPlatformer.Player
 			_rigidbody = GetComponent<Rigidbody2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
-
-			_groundChecker.OnLanded += () => _animator.SetBool("IsJumping", false);
-			_groundChecker.OnJumped += () => _animator.SetBool("IsJumping", true);
 
             _inputReader.OnJumpInput += OnJump;
             _inputReader.OnMoveInput += OnMove;
@@ -71,6 +68,7 @@ namespace BWPlatformer.Player
                 bool isGrounded = _groundChecker.IsGrounded;
                 CheckJump(isGrounded);
                 Flip();
+                JumpAnim(isGrounded);
                 RunAnim(isGrounded);
             }
         }
@@ -108,6 +106,11 @@ namespace BWPlatformer.Player
             }
         }
 
+        private void JumpAnim(bool IsGrounded)
+        {
+			_animator.SetBool("IsJumping", !IsGrounded);
+		}
+
         public void Death()
         {
             _rigidbody.velocity = new Vector2(0, 0);
@@ -121,5 +124,15 @@ namespace BWPlatformer.Player
             yield return new WaitForSeconds(1);
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
-    }
+
+		public void GetDamage()
+		{
+			Death();
+		}
+
+		public void TeleportTo(Vector2 position)
+		{
+			transform.position = position;
+		}
+	}
 }

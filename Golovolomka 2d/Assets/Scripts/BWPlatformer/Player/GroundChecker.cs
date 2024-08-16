@@ -1,59 +1,28 @@
 using BWPlatformer.Interfaces;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace BWPlatformer.Player
 {
     public class GroundChecker : MonoBehaviour, IGroundChecker
     {
-		public bool IsGrounded { get; private set; }
+        [SerializeField] private Vector2 _colliderSize;
+        [SerializeField] private LayerMask _layerMask;
 
-        public event System.Action OnLanded;
-        public event System.Action OnJumped;
+        public bool IsGrounded => CheckGrounded();
 
-        private HashSet<Collider2D> _collisionsColiders = new(4);
+        private Collider2D[] _collisionsColiders = new Collider2D[1];
+        private ContactFilter2D _contactFilter = new();
 
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (!other.gameObject.CompareTag(Tags.Player))
-            {
-				_collisionsColiders.Add(other);
-                if(_collisionsColiders.Count == 1)
-                {
-                    OnLanded?.Invoke();
-                    IsGrounded = true;
-                }
-			}
-        }
+		private void Awake()
+		{
+			_contactFilter.SetNormalAngle(225, 315);
+			_contactFilter.SetLayerMask(_layerMask);
+		}
 
-        private void OnTriggerExit2D(Collider2D other)
-        {
-            if (!other.gameObject.CompareTag(Tags.Player))
-            {
-				_collisionsColiders.Remove(other);
-				if (_collisionsColiders.Count == 0)
-				{
-					OnJumped?.Invoke();
-					IsGrounded = false;
-				}
-			}
-        }
-
-        public void OnBackgroundColorChanged()
-        {
-            UpdateCollisions();
-        }
-
-        private void UpdateCollisions()
-        {
-            _collisionsColiders.RemoveWhere(c => !c.gameObject.activeInHierarchy);
-            bool LastGroundedState = IsGrounded;
-			IsGrounded = _collisionsColiders.Count > 0;
-            if(LastGroundedState && !IsGrounded)
-            {
-				OnJumped?.Invoke();
-			}
-        }
-    }
+		private bool CheckGrounded()
+		{
+            int collisonsCount = Physics2D.OverlapBox(transform.position, _colliderSize, 0, _contactFilter, _collisionsColiders);
+            return collisonsCount > 0;
+		}
+	}
 }

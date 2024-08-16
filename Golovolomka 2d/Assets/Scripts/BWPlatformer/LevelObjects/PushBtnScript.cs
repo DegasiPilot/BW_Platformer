@@ -1,4 +1,3 @@
-using BWPlatformer;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -22,7 +21,7 @@ namespace BWPlatformer.LevelObjects
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (!_isPressed && collision.transform.CompareTag(Tags.Player))
+            if (!_isPressed)
             {
                 StopAllCoroutines();
                 _isPressed = true;

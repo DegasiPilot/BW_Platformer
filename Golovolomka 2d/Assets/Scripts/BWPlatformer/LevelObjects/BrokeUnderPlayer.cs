@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BWPlatformer.LevelObjects
 {
-	public class BrokeUnderPlayer : MonoBehaviour
+	public abstract class BrokeUnderPlayer : MonoBehaviour
 	{
-		[SerializeField] protected float _timeToBroke = 1f;
+		[SerializeField] protected float _timeToBroke;
 
-		private bool IsBroking;
 		protected YieldInstruction _waitInstruction;
 
 		protected virtual void Awake()
@@ -17,26 +15,9 @@ namespace BWPlatformer.LevelObjects
 
 		protected virtual void OnCollisionEnter2D(Collision2D collision)
 		{
-			if (collision.collider.CompareTag(Tags.Player))
-			{
-				Broke(collision);
-			}
+			Broke(collision);
 		}
 
-		protected virtual void Broke(Collision2D collision)
-		{
-			if (!IsBroking)
-			{
-				IsBroking = true;
-				StartCoroutine(BrokeRoutine());
-			}
-
-			IEnumerator BrokeRoutine()
-			{
-				yield return _waitInstruction;
-				Destroy(gameObject);
-				yield break;
-			}
-		}
+		protected abstract void Broke(Collision2D collision);
 	}
 }

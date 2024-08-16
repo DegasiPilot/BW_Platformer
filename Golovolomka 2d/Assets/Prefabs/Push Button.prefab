@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1743436178523977886}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Push Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 9198307768187576873}
   - component: {fileID: 3580315733814598711}
   - component: {fileID: 7907573575040815606}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Push Plate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,4 +197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 031b750879ea0d24e892215f0f464f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Blocks: []
+  OnPressed:
+    m_PersistentCalls:
+      m_Calls: []

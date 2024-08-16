@@ -18,6 +18,7 @@ namespace BWPlatformer.UI
 				if(tip.TargetDeviceType == DeviceType.Unknown || tip.TargetDeviceType == deviceType)
 				{
 					_tipsOnUI.Add(tip);
+					tip.Init();
 				}
 				else
 				{

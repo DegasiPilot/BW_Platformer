@@ -12,14 +12,14 @@ namespace BWPlatformer.UI
 
 		private Text _text;
 
-		private void Start()
+		public void Init()
 		{
 			_text = GetComponent<Text>();
 		}
 
-		public void ChangeColor(Color backgroundColor)
+		public void ChangeColor(Color newColor)
 		{
-			_text.color = backgroundColor == Color.black ? Color.white : Color.black;
+			_text.color = newColor;
 		}
 	}
 }

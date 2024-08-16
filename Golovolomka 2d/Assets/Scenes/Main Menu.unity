@@ -1589,8 +1589,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _coins:
   - {fileID: 8161251656761306302}
+  - {fileID: 1773823811}
   - {fileID: 511081483}
-  _sceneIndexes: 02000000030000000400000005000000
+  _sceneIndexes: 0200000003000000040000000500000006000000
   _levelsManager: {fileID: 1753890397}
   _localizedTexts:
   - {fileID: 2132912625}
@@ -2745,6 +2746,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonPrefab: {fileID: 2738621203254525033, guid: 1fd97759a7ef01344bd1859284009068, type: 3}
+--- !u!114 &1773823811 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3181808109240384380, guid: e9b7bcec74f1cb64f86f8ad4286fc965, type: 3}
+  m_PrefabInstance: {fileID: 742347146}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 720ae44126d30924aaed75ea88862954, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1812840828
 GameObject:
   m_ObjectHideFlags: 0

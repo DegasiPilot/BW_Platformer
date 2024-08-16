@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2465547243788192416}
   - component: {fileID: 195900990307199217}
   - component: {fileID: 3699427549693802561}
-  - component: {fileID: 3933678097518420640}
+  - component: {fileID: 6506602680149000875}
   m_Layer: 0
   m_Name: BlackBlocks
   m_TagString: Untagged
@@ -223,14 +223,16 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths: []
+  m_ColliderPaths:
+  - m_Collider: {fileID: 2465547243788192416}
+    m_ColliderPaths: []
   m_CompositePaths:
     m_Paths: []
   m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
+  m_OffsetDistance: 0
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 550172721973443332}
---- !u!114 &3933678097518420640
+--- !u!114 &6506602680149000875
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -239,10 +241,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 550172721973443332}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b0b410dcf2bd534aa72d88fd3d3c19b, type: 3}
+  m_Script: {fileID: 11500000, guid: e0853f5c91d503c4abdfa3212537b3bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MyColor: {r: 0, g: 0, b: 0, a: 1}
+  _myCollider: {fileID: 2465547243788192416}
+  _renderer: {fileID: 8464973789256396091}
 --- !u!1 &3819080322191416656
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,11 +469,13 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths: []
+  m_ColliderPaths:
+  - m_Collider: {fileID: 8353134945297196984}
+    m_ColliderPaths: []
   m_CompositePaths:
     m_Paths: []
   m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
+  m_OffsetDistance: 0
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 3819080322191416656}
 --- !u!1 &4009822026143595888
@@ -536,7 +542,7 @@ GameObject:
   - component: {fileID: 2828101935910704662}
   - component: {fileID: 5409113631764080872}
   - component: {fileID: 2854044722534700430}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FinishBlocksBlocks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -744,11 +750,13 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths: []
+  m_ColliderPaths:
+  - m_Collider: {fileID: 1561076101202834935}
+    m_ColliderPaths: []
   m_CompositePaths:
     m_Paths: []
   m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
+  m_OffsetDistance: 0
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 4766000680049965370}
 --- !u!114 &2854044722534700430
@@ -778,7 +786,7 @@ GameObject:
   - component: {fileID: 219224146416544329}
   - component: {fileID: 9178780521321231312}
   - component: {fileID: 7621946788627643819}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ColorfulBlocks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -986,11 +994,13 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths: []
+  m_ColliderPaths:
+  - m_Collider: {fileID: 3236335806122707462}
+    m_ColliderPaths: []
   m_CompositePaths:
     m_Paths: []
   m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
+  m_OffsetDistance: 0
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 5436177722682534325}
 --- !u!114 &7621946788627643819
@@ -1020,7 +1030,7 @@ GameObject:
   - component: {fileID: 8122568103515591735}
   - component: {fileID: 4355241727525993777}
   - component: {fileID: 675759305670474805}
-  - component: {fileID: 2523978053341906254}
+  - component: {fileID: 3894485615951375215}
   m_Layer: 0
   m_Name: WhiteBlocks
   m_TagString: Untagged
@@ -1229,14 +1239,16 @@ CompositeCollider2D:
   m_GeometryType: 0
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths: []
+  m_ColliderPaths:
+  - m_Collider: {fileID: 8122568103515591735}
+    m_ColliderPaths: []
   m_CompositePaths:
     m_Paths: []
   m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
+  m_OffsetDistance: 0
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 6053886294408776627}
---- !u!114 &2523978053341906254
+--- !u!114 &3894485615951375215
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1245,7 +1257,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6053886294408776627}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b0b410dcf2bd534aa72d88fd3d3c19b, type: 3}
+  m_Script: {fileID: 11500000, guid: e0853f5c91d503c4abdfa3212537b3bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MyColor: {r: 1, g: 1, b: 1, a: 1}
+  _myCollider: {fileID: 8122568103515591735}
+  _renderer: {fileID: 730698256378144359}

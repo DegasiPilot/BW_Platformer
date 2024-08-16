@@ -14,6 +14,7 @@ namespace BWPlatformer
         public static GameManager Instance { get; private set; }
 
 		[SerializeField] private UnityEvent<Color> _onBackgroundChanged;
+		[SerializeField] private UnityEvent _OnReplay;
 
         [SerializeField] private int _levelNumber;
         [SerializeField] private CanvasManager _canvasManager;
@@ -43,6 +44,7 @@ namespace BWPlatformer
 				{
                     if (levelInfo.IsEarnedCoins[i]) _coins[i].gameObject.SetActive(false);
 				}
+                _OnReplay.Invoke();
 			}
 
             _inputReader.OnChangeBackgroundInput += OnBackgroundChangeInput;

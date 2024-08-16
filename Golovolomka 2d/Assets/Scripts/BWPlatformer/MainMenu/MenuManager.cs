@@ -22,17 +22,25 @@ namespace BWPlatformer
             _levelsManager.Init(_sceneIndexes.Count(), StartLevel);
 			var savedLevels = GameDataManager.CurrentData.CompletedLevels;
             int levelsCount = savedLevels.Count;
-			for (int i = 0; i < _coins.Length; i++)
+            try
             {
-				if (_coins[i].LevelNumber <= levelsCount)
+                for (int i = 0; i < _coins.Length; i++)
                 {
-                    var level = savedLevels[_coins[i].LevelNumber - 1];
-                    if(level.IsEarnedCoins != null)
+                    if (_coins[i].LevelNumber <= levelsCount)
                     {
-                        _coins[i].Init(level.IsEarnedCoins);
+                        var level = savedLevels[_coins[i].LevelNumber - 1];
+                        if (level.IsEarnedCoins != null)
+                        {
+                            _coins[i].Init(level.IsEarnedCoins);
+                        }
                     }
                 }
-			}
+            }
+            catch
+            {
+                Debug.LogError("Coins");
+                GameDataManager.ResetData();
+            }
         }
 
         public void Exit()

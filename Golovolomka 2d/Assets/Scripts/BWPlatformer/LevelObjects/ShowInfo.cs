@@ -1,4 +1,3 @@
-using BWPlatformer;
 using UnityEngine;
 
 namespace BWPlatformer.LevelObjects.Tiles
@@ -9,11 +8,8 @@ namespace BWPlatformer.LevelObjects.Tiles
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision.collider.CompareTag(Tags.Player))
-            {
-                info.SetActive(true);
-                GameManager.Instance.Pause();
-            }
+            info.SetActive(true);
+            GameManager.Instance.Pause();
         }
     }
 }

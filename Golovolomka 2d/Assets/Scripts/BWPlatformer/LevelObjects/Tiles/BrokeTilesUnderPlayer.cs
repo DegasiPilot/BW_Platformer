@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace BWPlatformer.LevelObjects.Tiles
 	[RequireComponent(typeof(Tilemap))]
 	public class BrokeTilesUnderPlayer : BrokeUnderPlayer
 	{
+		[SerializeField] bool _brokeAllTilesTogether;
+
 		private readonly Vector3Int[] _directions = { Vector3Int.up, Vector3Int.right, Vector3Int.down, Vector3Int.left };
 
 		[SerializeField] AnimatedTile _brokingAnimation;
@@ -18,6 +21,7 @@ namespace BWPlatformer.LevelObjects.Tiles
 		private readonly HashSet<Vector3Int> _allTilesToBroke = new();
 
 		private readonly ContactPoint2D[] _contacts = new ContactPoint2D[4];
+		private Func<TileBase, Vector3Int, IEnumerator> brokeRoutine;
 
 
 		protected override void Awake()
@@ -25,6 +29,14 @@ namespace BWPlatformer.LevelObjects.Tiles
 			base.Awake();
 			_tilemap = GetComponent<Tilemap>();
 			_grid = _tilemap.layoutGrid;
+			if (_brokeAllTilesTogether)
+			{
+				brokeRoutine = BrokeTogether;
+			}
+			else
+			{
+				brokeRoutine = BrokeSeparately;
+			}
 		}
 
 		protected override void Broke(Collision2D collision)
@@ -37,29 +49,47 @@ namespace BWPlatformer.LevelObjects.Tiles
 				TileBase tile = _tilemap.GetTile(tilePos);
 				if (tile != null && !_allTilesToBroke.Contains(tilePos))
 				{
-					StartCoroutine(BrokeRoutine(tile, tilePos));
+					StartCoroutine(brokeRoutine(tile, tilePos));
 				}
-			}
-
-			IEnumerator BrokeRoutine(TileBase tileType, Vector3Int startTilePos)
-			{
-				foreach (var tilesGroup in GetBrokingTiles(tileType, startTilePos))
-				{
-					_allTilesToBroke.UnionWith(tilesGroup);
-					if(_brokingAnimation != null)
-					{
-						_tilemap.SetTiles(tilesGroup, Enumerable.Repeat(_brokingAnimation, tilesGroup.Length).ToArray());
-					}
-					yield return _waitInstruction;
-					_tilemap.SetTiles(tilesGroup, Enumerable.Repeat<TileBase>(null, tilesGroup.Length).ToArray());
-					_allTilesToBroke.ExceptWith(tilesGroup);
-				}
-				yield break;
 			}
 		}
 
+		private IEnumerator BrokeSeparately(TileBase tileType, Vector3Int startTilePos)
+		{
+			foreach (var tilesGroup in GetBrokingTiles(tileType, startTilePos))
+			{
+				_allTilesToBroke.UnionWith(tilesGroup);
+				yield return BrokeTilesInstruction(tilesGroup);
+				_allTilesToBroke.ExceptWith(tilesGroup);
+			}
+			yield break;
+		}
+
+		private IEnumerator BrokeTogether(TileBase tileType, Vector3Int startTilePos)
+		{
+			HashSet<Vector3Int> tilesToBroke = new();
+			foreach (var tilesGroup in GetBrokingTiles(tileType, startTilePos))
+			{
+				_allTilesToBroke.UnionWith(tilesGroup);
+				tilesToBroke.UnionWith(tilesGroup);
+			}
+			yield return BrokeTilesInstruction(tilesToBroke.ToArray());
+			_allTilesToBroke.ExceptWith(tilesToBroke);
+			yield break;
+		}
+
+		private IEnumerator BrokeTilesInstruction(Vector3Int[] tilesToBroke)
+		{
+			if (_brokingAnimation != null)
+			{
+				_tilemap.SetTiles(tilesToBroke, Enumerable.Repeat(_brokingAnimation, tilesToBroke.Length).ToArray());
+			}
+			yield return _waitInstruction;
+			_tilemap.SetTiles(tilesToBroke, Enumerable.Repeat<TileBase>(null, tilesToBroke.Length).ToArray());
+		}
+
 		/// <summary>
-		/// Call new time when you delete last tiles
+		/// Check tiles only in _allTilesToBroke
 		/// </summary>
 		private IEnumerable<Vector3Int[]> GetBrokingTiles(TileBase tileType, Vector3Int startTile)
 		{
