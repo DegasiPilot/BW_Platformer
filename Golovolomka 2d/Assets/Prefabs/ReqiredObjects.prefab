@@ -299,6 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 555abca0bd9818d42a8dec37acc4460c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputSettings: {fileID: 11400000, guid: 05dec8100b65c9b4c9ae9022ed6cfd3d, type: 2}
 --- !u!1 &8363963621801703674
 GameObject:
   m_ObjectHideFlags: 0
@@ -3614,6 +3615,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2713055194299982460, guid: d22a2b92580364e40ad0c2ae9282d52f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3267388018940618280, guid: d22a2b92580364e40ad0c2ae9282d52f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5342983463649338748, guid: d22a2b92580364e40ad0c2ae9282d52f, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -3710,6 +3719,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 5223478380531284345}
+    - target: {fileID: 8625852161022521638, guid: d22a2b92580364e40ad0c2ae9282d52f, type: 3}
+      propertyPath: OnStickPointDown.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 225515846453036555}
     - target: {fileID: 8948101545999324041, guid: d22a2b92580364e40ad0c2ae9282d52f, type: 3}
       propertyPath: m_Camera
       value: 
@@ -3719,6 +3732,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d22a2b92580364e40ad0c2ae9282d52f, type: 3}
+--- !u!114 &225515846453036555 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3848630895523768219, guid: d22a2b92580364e40ad0c2ae9282d52f, type: 3}
+  m_PrefabInstance: {fileID: 3911415992878080400}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 716f73ed3c908ea499a6fbc39b4cf999, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2385289155163606728 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1680436150132141912, guid: d22a2b92580364e40ad0c2ae9282d52f, type: 3}

@@ -11,6 +11,8 @@ namespace BWPlatformer.Input
 		public override event Action OnChangeBackgroundInput;
 		public override event Action OnPauseInput;
 
+		[SerializeField] InputSettings _inputSettings;
+
 		private InputActions _inputActions;
 
 		private void Awake()
@@ -40,7 +42,17 @@ namespace BWPlatformer.Input
 		{
 			if (context.phase != InputActionPhase.Started)
 			{
-				OnMoveInput?.Invoke(context.ReadValue<Vector2>());
+				Vector2 moveInput = context.ReadValue<Vector2>();
+				float AbsX = Mathf.Abs(moveInput.x);
+				if (AbsX <= _inputSettings.defaultDeadzoneMin)
+				{
+					moveInput.x = 0;
+				}
+				else if(AbsX >= _inputSettings.defaultDeadzoneMax)
+				{
+					moveInput.x = moveInput.x >= 0 ? 1 : -1;
+				}
+				OnMoveInput?.Invoke(moveInput);
 			}
 		}
 

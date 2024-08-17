@@ -1,6 +1,7 @@
 using BWPlatformer.Input;
 using BWPlatformer.Interfaces;
 using BWPlatformer.LevelObjects.Bonuses;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,9 @@ namespace BWPlatformer.Player
     [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer), typeof(Animator))]
     public class PlayerController : MonoBehaviour, IDamageable, ITeleportable
     {
+        public event Action OnJump;
+        public event WalkDelegate OnWalk;
+
         [SerializeField] private float _speed = 5;
         [SerializeField] private float _jumpForce = 7;
         [SerializeField] private float _bonusTime;
@@ -38,16 +42,16 @@ namespace BWPlatformer.Player
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
 
-            _inputReader.OnJumpInput += OnJump;
-            _inputReader.OnMoveInput += OnMove;
+            _inputReader.OnJumpInput += OnJumpInput;
+            _inputReader.OnMoveInput += OnMoveInput;
 		}
 
-		private void OnMove(Vector2 OnMove)
+		private void OnMoveInput(Vector2 OnMove)
 		{
             _horizontalInput = OnMove.x;
 		}
 
-		private void OnJump()
+		private void OnJumpInput()
         {
             if (!_jumpInput && Time.timeScale > 0)
             {
@@ -66,7 +70,11 @@ namespace BWPlatformer.Player
                 }
                 _rigidbody.velocity = new Vector2(_horizontalInput * _speed, _rigidbody.velocity.y);
                 bool isGrounded = _groundChecker.IsGrounded;
-                CheckJump(isGrounded);
+				if (isGrounded)
+				{
+					OnWalk.Invoke(Mathf.Abs(_horizontalInput));
+				}
+				CheckJump(isGrounded);
                 Flip();
                 JumpAnim(isGrounded);
                 RunAnim(isGrounded);
@@ -78,6 +86,7 @@ namespace BWPlatformer.Player
             if (_jumpInput && isGrounded)
             {
                 _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+                OnJump?.Invoke();
             }
 			_jumpInput = false;
 		}
@@ -135,4 +144,6 @@ namespace BWPlatformer.Player
 			transform.position = position;
 		}
 	}
+
+    public delegate void WalkDelegate(float normalizedSpeed);
 }
